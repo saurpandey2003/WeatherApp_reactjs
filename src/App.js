@@ -24,9 +24,6 @@ function App() {
   const [locationPermission, setLocationPermission] = useState(false);
 
 
-
-
-
   const no_date = currentDate.getDate();
   const day = currentDate.getDay();
   const year = currentDate.getFullYear();
@@ -39,6 +36,44 @@ function App() {
   const Real_day = day_list[day]
   const Present_month = month_list[month];
   console.log(sec, Present_month);
+
+
+
+
+
+  useEffect(() => {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const { latitude, longitude } = position.coords;
+          try {
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=Metric&appid=38e19a036da04d6e8eb039ecea8ecae8`;
+            const response = await fetch(url);
+            const jsonData = await response.json();
+            setData(jsonData);
+            setLoading(false);
+            updatedcity(jsonData.name);
+            setShowCity(true);
+            setLocationPermission(true); 
+          } catch (error) {
+            console.error("Error fetching weather data:", error);
+          }
+        },
+        () => {
+          setLocationPermission(false); 
+        }
+      );
+    } else {
+      setLocationPermission(false); 
+
+    const intervalId = setInterval(() => {
+      setCurrentDate(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }}, []);
+
+
 
   const getWeatherData = async () => {
     try {
@@ -56,6 +91,7 @@ function App() {
       setLoading(false);
       updatedcity(jsonData.name);
       setShowCity(true);
+      setLocationPermission(true);
 
     } catch (error) {
       console.error("Error fetching weather data:", error);
@@ -66,38 +102,7 @@ function App() {
 
 
 
-  useEffect(() => {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        async (position) => {
-          const { latitude, longitude } = position.coords;
-          try {
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=Metric&appid=38e19a036da04d6e8eb039ecea8ecae8`;
-            const response = await fetch(url);
-            const jsonData = await response.json();
-            setData(jsonData);
-            setLoading(false);
-            updatedcity(jsonData.name);
-            setShowCity(true);
-          } catch (error) {
-            console.error("Error fetching weather data:", error);
-          }
-        },
-        () => {
-          setLocationPermission(false);
-        }
-      );
-    } else {
-      setLocationPermission(false);
-    }
-
-    const intervalId = setInterval(() => {
-      setCurrentDate(new Date());
-    }, 1000);
-
-    return () => clearInterval(intervalId);
-  }, []);
-
+  
 
 
 
