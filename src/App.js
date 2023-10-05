@@ -100,14 +100,6 @@ function App() {
 
  
 
-
-
-  
-
-
-
-
-
   const cityupdt = (e) => {
 
     updatedcity(e.target.value);
