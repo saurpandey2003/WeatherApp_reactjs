@@ -98,7 +98,6 @@ function App() {
     }
   };
 
- 
 
   const cityupdt = (e) => {
 
@@ -116,8 +115,7 @@ function App() {
     }
 
   };
-
-
+//
 
   return (
     <>
