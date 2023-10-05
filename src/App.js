@@ -11,6 +11,7 @@ import img1 from './images/weather.png';
 import clear_sky from './images/clear sky.png';
 import over_cast from './images/over cast.png';
 import load from './images/WeatherIcons.gif';
+import scatter from './images/scatterd cloud.png';
 
 
 
@@ -151,6 +152,7 @@ function App() {
               {data.weather[0].description === 'mist' && <img src={mist} alt="mist" />}
               {data.weather[0].description === 'clear sky' && <img src={clear_sky} alt="clear sky" />}
               {data.weather[0].description === 'overcast clouds' && <img src={over_cast} alt="over cast" />}
+              {data.weather[0].description === 'scattered clouds' && <img src={scatter} alt="scattered cloud" />}
 
             </div>
             <p className='boder'>Humidity :    {data.main.humidity}%</p>
